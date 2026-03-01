@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Random Gift</title>
+</head>
+
+<body style="text-align:center; margin-top:100px;">
+
+<img id="gift" width="300">
+
+<script>
+
+const voucher = "voucher.png"
+
+const otherGifts = [
+"qua1.png",
+"qua2.png",
+"qua3.png",
+"qua4.png",
+"qua5.png"
+]
+
+function showRandomGift(){
+
+let random = Math.random()
+
+if(random < 0.6){
+document.getElementById("gift").src = voucher
+}else{
+let randomIndex = Math.floor(Math.random() * otherGifts.length)
+document.getElementById("gift").src = otherGifts[randomIndex]
+}
+
+}
+
+showRandomGift()
+
+</script>
+
+</body>
+</html>

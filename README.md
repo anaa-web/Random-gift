@@ -1,59 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Quay thưởng</title>
-
-<style>
-body{
-    text-align:center;
-    font-family:Arial;
-    margin-top:40px;
-}
-img{
-    width:250px;
-    margin-top:20px;
-}
-button{
-    padding:12px 25px;
-    font-size:18px;
-    cursor:pointer;
-}
-</style>
+    <title>Random Gift</title>
 </head>
 
-<body>
-
-<h1>🎁 Quay nhận thưởng</h1>
-
-<button onclick="spin()">QUAY NGAY</button>
-
-<br>
-<img id="result" src="">
+<body style="text-align:center; margin-top:100px;">
+    <img id="gift" width="300">
 
 <script>
+const voucher = "voucher.png"
 
-function spin(){
+const otherGifts = [
+    "qua1.png",
+    "qua2.png",
+    "qua3.png",
+    "qua4.png",
+    "qua5.png"
+]
 
-    let r = Math.random()
+function showRandomGift(){
 
-    if(r < 0.6){
-        document.getElementById("result").src = "voucher.png"
+    let result
+
+    // 60% ra voucher
+    if (Math.random() < 0.6){
+        result = voucher
     }
+    // 40% ra quà khác (random)
     else{
-        let gifts = [
-            "qua1.png",
-            "qua2.png",
-            "qua3.png",
-            "qua4.png",
-            "qua5.png"
-        ]
-
-        let randomGift = gifts[Math.floor(Math.random()*gifts.length)]
-        document.getElementById("result").src = randomGift
+        const i = Math.floor(Math.random() * otherGifts.length)
+        result = otherGifts[i]
     }
+
+    document.getElementById("gift").src = result
 }
 
+showRandomGift()
 </script>
 
 </body>

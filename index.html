@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lucky Gift</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+body{
+margin:0;
+background:black;
+overflow:hidden;
+font-family:sans-serif;
+}
+
+#startScreen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+z-index:10;
+cursor:pointer;
+}
+
+#gift{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+object-fit:contain;
+display:none;
+background:black;
+}
+</style>
+</head>
+
+<body>
+
+<div id="startScreen">TAP TO OPEN 🎁</div>
+
+<img id="gift">
+
+<audio id="winSound" src="win.mp3" preload="auto"></audio>
+
+<script>
+
+// ===== XÁC SUẤT =====
+const voucher="voucher.png"
+const qua6="qua6.png"
+
+const gifts=[
+"qua1.png",
+"qua2.png",
+"qua3.png",
+"qua4.png",
+"qua5.png"
+]
+
+// ===== BẮT ĐẦU =====
+document.getElementById("startScreen").onclick=startApp
+
+function startApp(){
+
+// mở quyền âm thanh mobile
+document.getElementById("winSound").play().then(()=>{
+document.getElementById("winSound").pause()
+document.getElementById("winSound").currentTime=0
+}).catch(()=>{})
+
+document.getElementById("startScreen").style.display="none"
+
+runRandom()
+}
+
+// ===== RANDOM 1 LẦN =====
+function runRandom(){
+
+const saved=localStorage.getItem("giftResult")
+if(saved){
+showGift(saved)
+return
+}
+
+const r=Math.random()
+let result
+
+if(r<0.6){
+result=voucher
+}
+else if(r<0.7){
+result=qua6
+}
+else{
+const index=Math.floor(Math.random()*gifts.length)
+result=gifts[index]
+}
+
+localStorage.setItem("giftResult",result)
+showGift(result)
+}
+
+// ===== HIỂN THỊ =====
+function showGift(src){
+
+const img=document.getElementById("gift")
+img.src=src
+img.style.display="block"
+
+// nếu trúng voucher
+if(src===voucher){
+
+// nhạc
+document.getElementById("winSound").play().catch(()=>{})
+
+// rung
+if(navigator.vibrate){
+navigator.vibrate([300,100,300,100,600])
+}
+
+// confetti mạnh
+confetti({
+particleCount:250,
+spread:140,
+origin:{y:0.6}
+})
+
+setTimeout(()=>{
+confetti({
+particleCount:200,
+spread:120
+})
+},400)
+
+}
+}
+
+</script>
+</body>
+</html>
